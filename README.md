@@ -1,45 +1,30 @@
-# Linux-IPC--Pipes
-Linux-IPC-Pipes
+#include <stdio.h>
+#include <unistd.h>
 
+int main() {
+    pid_t pid, ppid;
 
-# Ex03-Linux IPC - Pipes
+    // Get the PID of the parent process
+    ppid = getpid();
 
-# AIM:
-To write a C program that illustrate communication between two process using unnamed and named pipes
+    // Create a new process using fork()
+    pid = fork();
 
-# DESIGN STEPS:
+    if (pid == -1) {
+        // If fork() fails
+        perror("fork failed");
+        return 1;
+    } else if (pid == 0) {
+        // Child process
+        printf("Child process:\n");
+        printf("PID: %d\n", getpid());    // Get the PID of the child
+        printf("PPID: %d\n", getppid()); // Get the PPID of the child
+    } else {
+        // Parent process
+        printf("Parent process:\n");
+        printf("PID: %d\n", getpid());    // Get the PID of the parent
+        printf("PPID: %d\n", getppid()); // Get the PPID of the parent
+    }
 
-### Step 1:
-
-Navigate to any Linux environment installed on the system or installed inside a virtual environment like virtual box/vmware or online linux JSLinux (https://bellard.org/jslinux/vm.html?url=alpine-x86.cfg&mem=192) or docker.
-
-### Step 2:
-
-Write the C Program using Linux Process API - pipe(), fifo()
-
-### Step 3:
-
-Testing the C Program for the desired output. 
-
-# PROGRAM:
-
-## C Program that illustrate communication between two process using unnamed pipes using Linux API system calls
-
-
-
-
-
-## OUTPUT
-
-
-## C Program that illustrate communication between two process using named pipes using Linux API system calls
-
-
-
-
-
-## OUTPUT
-
-
-# RESULT:
-The program is executed successfully.
+    return 0;
+}
